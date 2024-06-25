@@ -3,9 +3,6 @@
 
 #include "struct.h"
 
-#define MAX_VERTICES 50
-#define INFINITO INT_MAX
-
 // Assinaturas das funções
 
 // Funções relacionadas ao Grafo

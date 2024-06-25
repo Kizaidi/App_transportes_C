@@ -1,9 +1,10 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-#define MAX_USUARIOS 50    // Número máximo de usuários que podem ser cadastrados
-#define MAX_VERTICES 50   // Número máximo de vértices
-#define MAX_CLIENTES 50   // Número máximo de clientes que podem ser cadastrados
+#define USUARIOS 50    // Número máximo de usuários que podem ser cadastrados
+#define VERTICES 50   // Número máximo de vértices
+#define CLIENTES 50   // Número máximo de clientes que podem ser cadastrados
+#define INFINITO INT_MAX
 
 // Estrutura para armazenar informações de usuários do aplicativo
 typedef struct {
@@ -12,7 +13,7 @@ typedef struct {
     char N; // 'A' para administrador, 'U' para usuário comum
 } UsuarioAPP;
 
-UsuarioAPP usuarios[MAX_USUARIOS]; // Array para armazenar os usuários
+UsuarioAPP usuarios[USUARIOS]; // Array para armazenar os usuários
 int numUsuarios = 0;               // Contador de usuários cadastrados
 
 // Estrutura para armazenar informações de clientes
@@ -22,7 +23,7 @@ typedef struct {
     char telefone[20];
 } Cliente;
 
-Cliente clientes[MAX_CLIENTES]; // Array para armazenar os clientes
+Cliente clientes[CLIENTES]; // Array para armazenar os clientes
 int numClientes = 0;            // Contador de clientes cadastrados
 
 // Estrutura para representar um grafo
@@ -40,7 +41,7 @@ typedef struct {
 
 // Estrutura para armazenar uma lista de vértices
 typedef struct {
-    Vertice *vertices[MAX_VERTICES];
+    Vertice *vertices[VERTICES];
     int numVertices; // Número de vértices na lista
 } ListaVertices;
 
@@ -58,9 +59,9 @@ typedef struct {
 
 // Estrutura para armazenar listas de usuários e táxis
 typedef struct {
-    Usuario *usuarios[MAX_VERTICES];
+    Usuario *usuarios[VERTICES];
     int numUsuarios; // Número de usuários na lista
-    Taxi *taxis[MAX_VERTICES];
+    Taxi *taxis[VERTICES];
     int numTaxis;    // Número de táxis na lista
 } ListaUsuarioTaxi;
 

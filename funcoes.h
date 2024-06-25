@@ -9,9 +9,6 @@
 #include "struct.h"
 #include "assinaturas.h"
 
-#define MAX_VERTICES 50
-#define INFINITO INT_MAX
-
 Grafo *criarGrafo(int numVertices)
 {
     Grafo *grafo = (Grafo *)malloc(sizeof(Grafo));
@@ -58,7 +55,7 @@ ListaUsuarioTaxi *criarListaUsuarioTaxi()
 
 void adicionarUsuario(ListaUsuarioTaxi *lista, int id, Vertice *localizacao)
 {
-    if (lista->numUsuarios < MAX_VERTICES)
+    if (lista->numUsuarios < VERTICES)
     {
         Usuario *usuario = (Usuario *)malloc(sizeof(Usuario));
         usuario->id = id;
@@ -69,7 +66,7 @@ void adicionarUsuario(ListaUsuarioTaxi *lista, int id, Vertice *localizacao)
 
 void adicionarTaxi(ListaUsuarioTaxi *lista, int id, Vertice *localizacao)
 {
-    if (lista->numTaxis < MAX_VERTICES)
+    if (lista->numTaxis < VERTICES)
     {
         Taxi *taxi = (Taxi *)malloc(sizeof(Taxi));
         taxi->id = id;
@@ -87,7 +84,7 @@ ListaVertices *criarListaVertices()
 
 void adicionarVertice(ListaVertices *lista, int id, int x, int y)
 {
-    if (lista->numVertices < MAX_VERTICES)
+    if (lista->numVertices < VERTICES)
     {
         Vertice *vertice = (Vertice *)malloc(sizeof(Vertice));
         vertice->id = id;
@@ -391,7 +388,7 @@ void cadastrarTaxistas(ListaUsuarioTaxi *listaUsuariosTaxis, ListaVertices *list
 // Função para cadastrar um novo usuário
 void cadastrarUsuario()
 {
-    if (numUsuarios >= MAX_USUARIOS)
+    if (numUsuarios >= USUARIOS)
     {
         printf("Nao e possivel cadastrar mais usuarios. Limite excedido.\n");
         return;
@@ -532,7 +529,7 @@ void carregarUsuarios()
     while (fscanf(arquivoUsuarios, "%s %s %c\n", usuarios[numUsuarios].nomeUsuario, usuarios[numUsuarios].senha, &usuarios[numUsuarios].N) != EOF)
     {
         numUsuarios++;
-        if (numUsuarios >= MAX_USUARIOS)
+        if (numUsuarios >= USUARIOS)
         {
             printf("Limite de usuarios excedido. Alguns usuarios nao foram carregados.\n");
             break;
@@ -590,7 +587,7 @@ bool autenticarUsuario()
 // Função para cadastrar um novo cliente, incluindo localização
 void cadastrarCliente()
 {
-    if (numClientes >= MAX_CLIENTES)
+    if (numClientes >= CLIENTES)
     {
         printf("Nao e possivel cadastrar mais clientes. Limite excedido.\n");
         return;

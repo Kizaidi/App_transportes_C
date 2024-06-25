@@ -8,17 +8,18 @@
 #include "assinaturas.h"
 
 // Função para imprimir o menu principal
-void imprimirMenu()
+void MenuPrincipal()
 {
-    printf("1. Gestao de usuarios\n");
-    printf("2. Backoffice (necessita de autenticacao do adm)\n");
-    printf("3. Aplicacao (necessita de autenticacao do usuario)\n");
-    printf("4. Sair\n");
+    printf("\n __________________________MENU PRINCIPAL________________________________\n\n");
+    printf("1- Gestao de Usuarios\n");
+    printf("2- Backoffice (necessita de autenticacao do adm)\n");
+    printf("3- Aplicacao (necessita de autenticacao do usuario)\n");
+    printf("4- Sair\n");
     printf("Escolha uma opcao: ");
 }
 
 // Função para imprimir o menu de gestão de usuários
-void gestaoUsuariosMenu()
+void GestaoUsuario()
 {
     printf("\n \t\t\t\t\t\t\t Menu de Gestao de Usuarios \n");
     printf("1. Cadastrar novo usuario\n");
@@ -56,7 +57,7 @@ void gestaoUsuariosMenu()
 }
 
 // Função para imprimir o menu do backoffice
-void backofficeMenu(Grafo *grafo, ListaUsuarioTaxi *listaUsuarioTaxi, ListaVertices *listaVertices)
+void BACKOFFICE(Grafo *grafo, ListaUsuarioTaxi *UsuarioTaxi, ListaVertices *Vertices)
 {
     while (1)
     {
@@ -106,19 +107,19 @@ void backofficeMenu(Grafo *grafo, ListaUsuarioTaxi *listaUsuarioTaxi, ListaVerti
             imprimirTodosCaminhosSemBuracos(grafo, inicio, destino); // Imprimir caminhos sem buracos
             break;
         case 7:
-            cadastrarTaxistas(listaUsuarioTaxi, listaVertices);
+            cadastrarTaxistas(UsuarioTaxi, Vertices);
             break;
         case 8:
-            printf("Voltando ao menu principal...\n");
+            printf("\nVoltando ...\n");
             return;
         default:
-            printf("Opcao invalida.\n");
+            printf("\nOpcao invalida.\n");
         }
     }
 }
 
 // Função para imprimir o menu da aplicação
-void aplicacaoMenu(ListaUsuarioTaxi *listaUsuarioTaxi, ListaVertices *listaVertices, Grafo *grafo)
+void aplicacaoMenu(ListaUsuarioTaxi *UsuarioTaxi, ListaVertices *Vertices, Grafo *grafo)
 {
     while (1)
     {
@@ -137,7 +138,7 @@ void aplicacaoMenu(ListaUsuarioTaxi *listaUsuarioTaxi, ListaVertices *listaVerti
         {
         case 1:
             printf("\n \t\t\t Cadastrar cliente\n");
-            cadastrarCliente(listaUsuarioTaxi, listaVertices);
+            cadastrarCliente(UsuarioTaxi, Vertices);
             break;
         case 2:
             Vertice localUsuario;
@@ -148,7 +149,7 @@ void aplicacaoMenu(ListaUsuarioTaxi *listaUsuarioTaxi, ListaVertices *listaVerti
             printf("Informe o destino desejado (x y): ");
             scanf("%d %d", &destino.x, &destino.y);
 
-            encontrarTaxiMaisProximo(listaUsuarioTaxi, &localUsuario, &destino);
+            encontrarTaxiMaisProximo(UsuarioTaxi, &localUsuario, &destino);
 
             int idTaxi;
             printf("Informe o ID do táxi para chamar: ");
@@ -156,18 +157,18 @@ void aplicacaoMenu(ListaUsuarioTaxi *listaUsuarioTaxi, ListaVertices *listaVerti
 
             // Encontrar o táxi na lista
             Taxi *taxiChamado = NULL;
-            for (int i = 0; i < listaUsuarioTaxi->numTaxis; i++)
+            for (int i = 0; i < UsuarioTaxi->numTaxis; i++)
             {
-                if (listaUsuarioTaxi->taxis[i]->id == idTaxi)
+                if (UsuarioTaxi->taxis[i]->id == idTaxi)
                 {
-                    taxiChamado = listaUsuarioTaxi->taxis[i];
+                    taxiChamado = UsuarioTaxi->taxis[i];
                     break;
                 }
             }
 
             if (taxiChamado != NULL)
             {
-                chamarTaxi(listaUsuarioTaxi, taxiChamado, &destino);
+                chamarTaxi(UsuarioTaxi, taxiChamado, &destino);
             }
             else
             {
@@ -238,9 +239,9 @@ int main()
     carregarUsuarios();
 
     // Inicializar estruturas de dados
-    Grafo *grafo = criarGrafo(MAX_VERTICES);
-    ListaVertices *listaVertices = criarListaVertices();
-    ListaUsuarioTaxi *listaUsuarioTaxi = criarListaUsuarioTaxi();
+    Grafo *grafo = criarGrafo(VERTICES);
+    ListaVertices *Vertices = criarListaVertices();
+    ListaUsuarioTaxi *UsuarioTaxi = criarListaUsuarioTaxi();
 
     // Carregar o grafo de um arquivo
     carregarGrafoDeArquivo(grafo, "inputDados.txt");
@@ -249,26 +250,26 @@ int main()
     do
     {
         // Imprimir o menu principal e ler a opção do usuário
-        imprimirMenu();
+        MenuPrincipal();
         scanf("%d", &opcao);
-
+        printf("\n ______________________________________\n\n");
         switch (opcao)
         {
         case 1:
-            gestaoUsuariosMenu();
+            GestaoUsuario();
             break;
         case 2:
             printf("\n");
             if (autenticarAdm())
             {
-                backofficeMenu(grafo, listaUsuarioTaxi, listaVertices);
+                BACKOFFICE(grafo, UsuarioTaxi, Vertices);
             }
             break;
         case 3:
             printf("\n\n");
             if (autenticarUsuario())
             {
-                aplicacaoMenu(listaUsuarioTaxi, listaVertices, grafo);
+                aplicacaoMenu(UsuarioTaxi, Vertices, grafo);
             }
             break;
         case 4:
